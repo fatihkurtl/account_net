@@ -13,7 +13,7 @@ class _FinancialSummaryState extends State<FinancialSummary> {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      color: Colors.grey[50],
+      color: Colors.grey[100],
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
         child: Column(
