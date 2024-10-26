@@ -79,7 +79,16 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                       ],
                     ),
                   )
-                : IncomeList(incomes: _incomes),
+                : IncomeList(
+                    incomes: _incomes,
+                    onDelete: (index) {
+                      setState(
+                        () {
+                          _incomes.removeAt(index);
+                        },
+                      );
+                    },
+                  ),
           ),
         ],
       ),

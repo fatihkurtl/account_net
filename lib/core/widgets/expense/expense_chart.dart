@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:account_net/core/helpers/income/category.dart';
+import 'package:account_net/core/helpers/expense/category.dart';
 
-class IncomeChart extends StatefulWidget {
-  final List<Map<String, dynamic>> incomes;
-  const IncomeChart({super.key, required this.incomes});
+class ExpenseChart extends StatefulWidget {
+  final List<Map<String, dynamic>> expenses;
+  const ExpenseChart({super.key, required this.expenses});
 
   @override
-  State<IncomeChart> createState() => _IncomeChartState();
+  State<ExpenseChart> createState() => _ExpenseChartState();
 }
 
-class _IncomeChartState extends State<IncomeChart> {
+class _ExpenseChartState extends State<ExpenseChart> {
   @override
   Widget build(BuildContext context) {
-    if (widget.incomes.isEmpty) return const SizedBox.shrink();
+    if (widget.expenses.isEmpty) return const SizedBox.shrink();
 
     Map<String, double> categoryTotals = {};
-    for (var income in widget.incomes) {
-      categoryTotals[income['category']] = (categoryTotals[income['category']] ?? 0) + income['amount'];
+    for (var expense in widget.expenses) {
+      categoryTotals[expense['category']] = (categoryTotals[expense['category']] ?? 0) + expense['amount'];
     }
 
     List<PieChartSectionData> sections = categoryTotals.entries.map((entry) {
       return PieChartSectionData(
         color: CategoryHelper.getCategoryColor(entry.key),
         value: entry.value,
-        title: '${(entry.value / widget.incomes.fold(0, (sum, item) => sum + item['amount']) * 100).toStringAsFixed(0)}%',
+        title: '${(entry.value / widget.expenses.fold(0, (sum, item) => sum + item['amount']) * 100).toStringAsFixed(0)}%',
         radius: 50,
         titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
       );
@@ -37,7 +37,7 @@ class _IncomeChartState extends State<IncomeChart> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Gelir Dağılımı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Gider Dağılımı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             SizedBox(
               height: 200,

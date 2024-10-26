@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:account_net/core/constants/items.dart';
+import 'package:account_net/core/widgets/expense/expense_list.dart';
+import 'package:account_net/core/widgets/expense/expense_chart.dart';
+import 'package:account_net/core/components/custom_floating_button.dart';
+import 'package:account_net/core/widgets/expense/summary_card.dart';
 
 class ExpenseTrackingScreen extends StatefulWidget {
-  const ExpenseTrackingScreen({Key? key}) : super(key: key);
+  const ExpenseTrackingScreen({super.key});
 
   @override
   _ExpenseTrackingScreenState createState() => _ExpenseTrackingScreenState();
@@ -56,11 +60,11 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
       ),
       body: Column(
         children: [
-          _buildSummaryCard(),
-          _buildExpenseChart(),
+          SummaryCard(expenses: _expenses),
+          ExpenseChart(expenses: _expenses),
           Expanded(
             child: _expenses.isEmpty
-                ? Center(
+                ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -73,120 +77,21 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                       ],
                     ),
                   )
-                : ListView.builder(
-                    itemCount: _expenses.length,
-                    itemBuilder: (context, index) {
-                      final expense = _expenses[index];
-                      return Dismissible(
-                        key: Key(expense['description']),
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.only(right: 16),
-                          child: Icon(Icons.delete, color: Colors.white),
-                        ),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          setState(() {
-                            _expenses.removeAt(index);
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Gider kaydı silindi')),
-                          );
-                        },
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: _getCategoryColor(expense['category']),
-                              child: Icon(_getCategoryIcon(expense['category']), color: Colors.white),
-                            ),
-                            title: Text(expense['description']),
-                            subtitle: Text('${expense['category']} - ${DateFormat('dd/MM/yyyy').format(expense['date'])}'),
-                            trailing: Text(
-                              '₺${expense['amount'].toStringAsFixed(2)}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
+                : ExpenseList(
+                    expenses: _expenses,
+                    onDelete: (index) {
+                      setState(() {
+                        _expenses.removeAt(index);
+                      });
                     },
                   ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showAddExpenseDialog(),
-        label: Text('Gider Ekle'),
-        icon: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _buildSummaryCard() {
-    double totalExpense = _expenses.fold(0, (sum, item) => sum + item['amount']);
-    return Card(
-      margin: EdgeInsets.all(16),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Toplam Gider', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(
-              '₺${totalExpense.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildExpenseChart() {
-    if (_expenses.isEmpty) return SizedBox.shrink();
-
-    Map<String, double> categoryTotals = {};
-    for (var expense in _expenses) {
-      categoryTotals[expense['category']] = (categoryTotals[expense['category']] ?? 0) + expense['amount'];
-    }
-
-    List<PieChartSectionData> sections = categoryTotals.entries.map((entry) {
-      return PieChartSectionData(
-        color: _getCategoryColor(entry.key),
-        value: entry.value,
-        title: '${(entry.value / _expenses.fold(0, (sum, item) => sum + item['amount']) * 100).toStringAsFixed(0)}%',
-        radius: 50,
-        titleStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
-      );
-    }).toList();
-
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Gider Dağılımı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: PieChart(
-                PieChartData(
-                  sections: sections,
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                ),
-              ),
-            ),
-          ],
-        ),
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: _showAddExpenseDialog,
+        buttonText: 'Gider Ekle',
+        icon: Icons.add,
       ),
     );
   }
@@ -196,7 +101,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Yeni Gider Ekle'),
+          title: const Text('Yeni Gider Ekle'),
           content: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -205,7 +110,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                 children: [
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: InputDecoration(labelText: 'Açıklama'),
+                    decoration: const InputDecoration(labelText: 'Açıklama'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Lütfen bir açıklama girin';
@@ -216,7 +121,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _amountController,
-                    decoration: InputDecoration(labelText: 'Miktar (₺)'),
+                    decoration: const InputDecoration(labelText: 'Miktar (₺)'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -231,8 +136,8 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: _selectedCategory,
-                    decoration: InputDecoration(labelText: 'Kategori'),
-                    items: ['Malzeme', 'İşçilik', 'Nakliye', 'Diğer'].map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
+                    decoration: const InputDecoration(labelText: 'Kategori'),
+                    items: ItemConstants.expenseItems.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedCategory = value!;
@@ -255,12 +160,12 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                       }
                     },
                     child: InputDecorator(
-                      decoration: InputDecoration(labelText: 'Tarih'),
+                      decoration: const InputDecoration(labelText: 'Tarih'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(DateFormat('dd/MM/yyyy').format(_selectedDate)),
-                          Icon(Icons.calendar_today),
+                          const Icon(Icons.calendar_today),
                         ],
                       ),
                     ),
@@ -271,13 +176,13 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
           ),
           actions: [
             TextButton(
-              child: Text('İptal'),
+              child: const Text('İptal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: Text('Ekle'),
+              child: const Text('Ekle'),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _addExpense();
@@ -289,31 +194,5 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
         );
       },
     );
-  }
-
-  Color _getCategoryColor(String category) {
-    switch (category) {
-      case 'Malzeme':
-        return Colors.blue;
-      case 'İşçilik':
-        return Colors.green;
-      case 'Nakliye':
-        return Colors.orange;
-      default:
-        return Colors.purple;
-    }
-  }
-
-  IconData _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Malzeme':
-        return Icons.inventory;
-      case 'İşçilik':
-        return Icons.engineering;
-      case 'Nakliye':
-        return Icons.local_shipping;
-      default:
-        return Icons.category;
-    }
   }
 }
