@@ -1,3 +1,4 @@
+import 'package:account_net/core/constants/items.dart';
 import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_dropdown.dart';
 import 'package:account_net/core/components/custom_textfield.dart';
@@ -71,10 +72,10 @@ class _QueickActionsState extends State<QueickActions> {
               CustomDropdown(
                 hintText: 'Tip',
                 items: type == 'invoice'
-                    ? ['Elektrik', 'Su', 'Doğalgaz', 'Internet', 'Diğer']
+                    ? ItemConstants.invoiceItems
                     : type == 'income'
-                        ? ['Kira', 'Satış', 'Hizmet', 'Diğer']
-                        : ['Kira', 'Personel', 'Malzeme', 'Diğer'],
+                        ? ItemConstants.incomeItems
+                        : ItemConstants.expenseItems,
                 selectedItem: selectedType,
                 onChanged: (String? newValue) {
                   setState(() {

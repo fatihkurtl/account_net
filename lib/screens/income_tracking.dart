@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:account_net/core/widgets/income/income_list.dart';
+import 'package:account_net/core/components/custom_floating_button.dart';
+import 'package:account_net/core/constants/items.dart';
+import 'package:account_net/core/widgets/income/income_chart.dart';
+import 'package:account_net/core/widgets/income/summary_card.dart';
 
 class IncomeTrackingScreen extends StatefulWidget {
   const IncomeTrackingScreen({super.key});
@@ -43,7 +47,9 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.grey[300],
         title: const Text('Gelir Takibi'),
         actions: [
           IconButton(
@@ -56,8 +62,8 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
       ),
       body: Column(
         children: [
-          _buildSummaryCard(),
-          _buildIncomeChart(),
+          SummaryCard(incomes: _incomes),
+          IncomeChart(incomes: _incomes),
           Expanded(
             child: _incomes.isEmpty
                 ? const Center(
@@ -73,120 +79,14 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                       ],
                     ),
                   )
-                : ListView.builder(
-                    itemCount: _incomes.length,
-                    itemBuilder: (context, index) {
-                      final income = _incomes[index];
-                      return Dismissible(
-                        key: Key(income['description']),
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 16),
-                          child: const Icon(Icons.delete, color: Colors.white),
-                        ),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          setState(() {
-                            _incomes.removeAt(index);
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Gelir kaydı silindi')),
-                          );
-                        },
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: _getCategoryColor(income['category']),
-                              child: Icon(_getCategoryIcon(income['category']), color: Colors.white),
-                            ),
-                            title: Text(income['description']),
-                            subtitle: Text('${income['category']} - ${DateFormat('dd/MM/yyyy').format(income['date'])}'),
-                            trailing: Text(
-                              '₺${income['amount'].toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                : IncomeList(incomes: _incomes),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showAddIncomeDialog(),
-        label: const Text('Gelir Ekle'),
-        icon: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _buildSummaryCard() {
-    double totalIncome = _incomes.fold(0, (sum, item) => sum + item['amount']);
-    return Card(
-      margin: const EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Toplam Gelir', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text(
-              '₺${totalIncome.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildIncomeChart() {
-    if (_incomes.isEmpty) return const SizedBox.shrink();
-
-    Map<String, double> categoryTotals = {};
-    for (var income in _incomes) {
-      categoryTotals[income['category']] = (categoryTotals[income['category']] ?? 0) + income['amount'];
-    }
-
-    List<PieChartSectionData> sections = categoryTotals.entries.map((entry) {
-      return PieChartSectionData(
-        color: _getCategoryColor(entry.key),
-        value: entry.value,
-        title: '${(entry.value / _incomes.fold(0, (sum, item) => sum + item['amount']) * 100).toStringAsFixed(0)}%',
-        radius: 50,
-        titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
-      );
-    }).toList();
-
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Gelir Dağılımı', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 200,
-              child: PieChart(
-                PieChartData(
-                  sections: sections,
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                ),
-              ),
-            ),
-          ],
-        ),
+      floatingActionButton: CustomFloatingActionButton(
+        onPressed: _showAddIncomeDialog,
+        buttonText: 'Gelir Ekle',
+        icon: Icons.add,
       ),
     );
   }
@@ -232,7 +132,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                   DropdownButtonFormField<String>(
                     value: _selectedCategory,
                     decoration: const InputDecoration(labelText: 'Kategori'),
-                    items: ['Satış', 'Hizmet', 'Kira', 'Diğer'].map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
+                    items: ItemConstants.incomeItems.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedCategory = value!;
@@ -289,31 +189,5 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
         );
       },
     );
-  }
-
-  Color _getCategoryColor(String category) {
-    switch (category) {
-      case 'Satış':
-        return Colors.blue;
-      case 'Hizmet':
-        return Colors.green;
-      case 'Kira':
-        return Colors.orange;
-      default:
-        return Colors.purple;
-    }
-  }
-
-  IconData _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Satış':
-        return Icons.shopping_cart;
-      case 'Hizmet':
-        return Icons.build;
-      case 'Kira':
-        return Icons.home;
-      default:
-        return Icons.attach_money;
-    }
   }
 }
