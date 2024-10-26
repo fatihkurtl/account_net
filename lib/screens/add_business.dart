@@ -16,13 +16,12 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   final businessPhoneController = TextEditingController();
   final monthlyIncomeController = TextEditingController();
   final businessAddressController = TextEditingController();
+  String? selectedSector;
 
   void addBusiness() {
     debugPrint('Add Company button pressed');
     Navigator.pushNamed(context, '/home');
   }
-
-  String? selectedSector;
 
   @override
   Widget build(BuildContext context) {

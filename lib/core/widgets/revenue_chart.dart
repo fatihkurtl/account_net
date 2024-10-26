@@ -14,6 +14,7 @@ class _RevenueChartState extends State<RevenueChart> {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: Colors.grey[200],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

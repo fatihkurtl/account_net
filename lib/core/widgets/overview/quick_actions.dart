@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:account_net/core/components/custom_dropdown.dart';
+import 'package:account_net/core/components/custom_textfield.dart';
 
-class QueickActions extends StatelessWidget {
+class QueickActions extends StatefulWidget {
   const QueickActions({super.key});
+
+  @override
+  State<QueickActions> createState() => _QueickActionsState();
+}
+
+class _QueickActionsState extends State<QueickActions> {
+  final amountController = TextEditingController();
+  String? selectedType;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +59,23 @@ class QueickActions extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(action),
-          content: const TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: 'Miktar (₺)',
-              border: OutlineInputBorder(),
-            ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomTextField(controller: amountController, hintText: 'Tutar', obscureText: false),
+              const SizedBox(height: 16),
+              CustomDropdown(
+                hintText: 'Tip',
+                items: const ['Kira', 'Satış', 'Hizmet', 'Diğer'],
+                selectedItem: selectedType,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedType = newValue;
+                  });
+                },
+              ),
+              const SizedBox(height: 16),
+            ],
           ),
           actions: [
             TextButton(
