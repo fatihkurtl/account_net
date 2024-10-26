@@ -124,7 +124,7 @@ class ReportsScreen extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
-                        const labels = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'];
+                        const labels = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
                         return Text(labels[value.toInt() % labels.length], style: const TextStyle(color: Colors.black54));
                       },
                       reservedSize: 22,

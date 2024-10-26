@@ -157,7 +157,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Gelir Grafiği',
+                  'Aylık Gelir Trendi',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Container(
@@ -190,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          const labels = ['O', 'Ş', 'M', 'N', 'M', 'H'];
+                          const labels = ['O', 'Ş', 'M', 'N', 'M', 'H', 'T', 'A', 'E', 'E', 'K', 'A'];
                           if (value.toInt() >= 0 && value.toInt() < labels.length) {
                             return Text(
                               labels[value.toInt()],
