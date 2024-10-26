@@ -51,6 +51,17 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.business),
+                  title: const Text(
+                    'İşletme Profili',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, '/business_profile');
+                    debugPrint('İşletme Profili butonuna basıldı');
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.note),
                   title: const Text(
                     'Notlar',

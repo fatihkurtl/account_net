@@ -15,6 +15,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   final businessEmailController = TextEditingController();
   final businessPhoneController = TextEditingController();
   final monthlyIncomeController = TextEditingController();
+  final workersCountController = TextEditingController();
   final businessAddressController = TextEditingController();
   String? selectedSector;
 
@@ -72,6 +73,12 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                 CustomTextField(
                   controller: monthlyIncomeController,
                   hintText: 'Aylık Toplam Gelir',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  controller: workersCountController,
+                  hintText: 'Personel Sayısı',
                   obscureText: false,
                 ),
                 const SizedBox(height: 10),

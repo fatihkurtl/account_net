@@ -18,24 +18,27 @@ class _QueickActionsState extends State<QueickActions> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Hızlı İşlemler', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Text(
+          'Hızlı İşlemler',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildActionButton(context, Icons.add, 'Gelir Ekle', Colors.green),
-            _buildActionButton(context, Icons.remove, 'Gider Ekle', Colors.red),
-            _buildActionButton(context, Icons.receipt, 'Fatura Ekle', Colors.blue),
+            _buildActionButton(context, 'income', Icons.add, 'Gelir Ekle', Colors.green),
+            _buildActionButton(context, 'expense', Icons.remove, 'Gider Ekle', Colors.red),
+            _buildActionButton(context, 'invoice', Icons.receipt, 'Fatura Ekle', Colors.blue),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildActionButton(BuildContext context, IconData icon, String label, Color color) {
+  Widget _buildActionButton(BuildContext context, String type, IconData icon, String label, Color color) {
     return ElevatedButton(
       onPressed: () {
-        _showActionDialog(context, label);
+        _showActionDialog(context, label, type);
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
@@ -53,7 +56,8 @@ class _QueickActionsState extends State<QueickActions> {
     );
   }
 
-  void _showActionDialog(BuildContext context, String action) {
+  void _showActionDialog(BuildContext context, String action, String type) {
+    debugPrint('Type: $type');
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -66,7 +70,11 @@ class _QueickActionsState extends State<QueickActions> {
               const SizedBox(height: 16),
               CustomDropdown(
                 hintText: 'Tip',
-                items: const ['Kira', 'Satış', 'Hizmet', 'Diğer'],
+                items: type == 'invoice'
+                    ? ['Elektrik', 'Su', 'Doğalgaz', 'Internet', 'Diğer']
+                    : type == 'income'
+                        ? ['Kira', 'Satış', 'Hizmet', 'Diğer']
+                        : ['Kira', 'Personel', 'Malzeme', 'Diğer'],
                 selectedItem: selectedType,
                 onChanged: (String? newValue) {
                   setState(() {

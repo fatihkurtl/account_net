@@ -11,6 +11,7 @@ class _BalanceCardState extends State<BalanceCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[200],
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(16),
