@@ -28,63 +28,80 @@ class HomeScreen extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Container(
-            color: Colors.grey[200],
-            child: ListView(
-              children: [
-                const DrawerHeader(
-                  child: Center(
-                    child: Text(
-                      'L O G O',
-                      style: TextStyle(fontSize: 35),
+          color: Colors.grey[300],
+          child: Stack(
+            children: [
+              ListView(
+                children: [
+                  const DrawerHeader(
+                    child: Center(
+                      child: Text(
+                        'L O G O',
+                        style: TextStyle(fontSize: 35),
+                      ),
                     ),
                   ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.home),
-                  title: const Text(
-                    'Anasayfa',
-                    style: TextStyle(fontSize: 20),
+                  ListTile(
+                    leading: const Icon(Icons.home),
+                    title: const Text(
+                      'Anasayfa',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onTap: () {
+                      // Navigator.pushReplacementNamed(context, '/home');
+                      debugPrint('Anasayfa butonuna basıldı');
+                    },
                   ),
-                  onTap: () {
-                    // Navigator.pushReplacementNamed(context, '/home');
-                    debugPrint('Anasayfa butonuna basıldı');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.business),
-                  title: const Text(
-                    'İşletme Profili',
-                    style: TextStyle(fontSize: 20),
+                  ListTile(
+                    leading: const Icon(Icons.business),
+                    title: const Text(
+                      'İşletme Profili',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/business_profile');
+                      debugPrint('İşletme Profili butonuna basıldı');
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/business_profile');
-                    debugPrint('İşletme Profili butonuna basıldı');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.note),
-                  title: const Text(
-                    'Notlar',
-                    style: TextStyle(fontSize: 20),
+                  ListTile(
+                    leading: const Icon(Icons.note),
+                    title: const Text(
+                      'Notlar',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/notes');
+                      debugPrint('Notlar butonuna basıldı');
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, '/notes');
-                    debugPrint('Notlar butonuna basıldı');
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text(
-                    'Ayarlar',
-                    style: TextStyle(fontSize: 20),
+                  ListTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text(
+                      'Ayarlar',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onTap: () {
+                      // Navigator.pushReplacementNamed(context, '/home');
+                      debugPrint('Ayarlar butonuna basıldı');
+                    },
                   ),
-                  onTap: () {
-                    // Navigator.pushReplacementNamed(context, '/home');
-                    debugPrint('Ayarlar butonuna basıldı');
-                  },
+                  const SizedBox(height: 50),
+                ],
+              ),
+              Positioned(
+                right: 16,
+                bottom: 16,
+                child: Text(
+                  'version 1.0',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
       body: const SingleChildScrollView(
         child: Padding(
