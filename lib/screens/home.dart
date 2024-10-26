@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+            onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
           ),
         ],
       ),
@@ -178,14 +178,34 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             SizedBox(
-              height: 150,
-              child: LineChart(
-                LineChartData(
-                  gridData: const FlGridData(show: false),
+              height: 200,
+              child: BarChart(
+                BarChartData(
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: true,
+                    getDrawingHorizontalLine: (value) => FlLine(
+                      color: Colors.grey.shade300,
+                      strokeWidth: 1,
+                    ),
+                  ),
                   titlesData: FlTitlesData(
                     topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                     rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 50, // Daha geniş alan ayırdık
+                        interval: 20000,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            '${value.toInt()} ₺',
+                            style: const TextStyle(fontSize: 10, color: Colors.grey), // Yazı boyutu küçüldü
+                            overflow: TextOverflow.ellipsis, // Metin taşmasını önler
+                          );
+                        },
+                      ),
+                    ),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
@@ -194,10 +214,7 @@ class HomeScreen extends StatelessWidget {
                           if (value.toInt() >= 0 && value.toInt() < labels.length) {
                             return Text(
                               labels[value.toInt()],
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
+                              style: const TextStyle(color: Colors.grey, fontSize: 12),
                             );
                           }
                           return const Text('');
@@ -206,58 +223,80 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   borderData: FlBorderData(show: false),
-                  minX: 0,
-                  maxX: 5,
-                  minY: 0,
-                  maxY: 6,
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: const [
-                        FlSpot(0, 3),
-                        FlSpot(1, 1),
-                        FlSpot(2, 4),
-                        FlSpot(3, 2),
-                        FlSpot(4, 5),
-                        FlSpot(5, 3),
-                      ],
-                      isCurved: true,
-                      color: Colors.blue,
-                      barWidth: 3,
-                      isStrokeCapRound: true,
-                      dotData: FlDotData(
-                        show: true,
-                        getDotPainter: (spot, percent, barData, index) {
-                          return FlDotCirclePainter(
-                            radius: 4,
-                            color: Colors.white,
-                            strokeWidth: 2,
-                            strokeColor: Colors.blue,
-                          );
-                        },
+                  barGroups: [
+                    BarChartGroupData(x: 0, barRods: [
+                      BarChartRodData(
+                        toY: 30000,
+                        color: Colors.blue,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
-                      belowBarData: BarAreaData(
-                        show: true,
-                        color: Colors.blue.withOpacity(0.1),
+                    ]),
+                    BarChartGroupData(x: 1, barRods: [
+                      BarChartRodData(
+                        toY: -15000, // Negatif gelir örneği
+                        color: Colors.red,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
-                    ),
+                    ]),
+                    BarChartGroupData(x: 2, barRods: [
+                      BarChartRodData(
+                        toY: -35000, // Negatif gelir örneği
+                        color: Colors.red,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 3, barRods: [
+                      BarChartRodData(
+                        toY: 35000, // Negatif gelir örneği
+                        color: Colors.red,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 4, barRods: [
+                      BarChartRodData(
+                        toY: 40000,
+                        color: Colors.blue,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 5, barRods: [
+                      BarChartRodData(
+                        toY: -10000, // Negatif gelir örneği
+                        color: Colors.red,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 6, barRods: [
+                      BarChartRodData(
+                        toY: 50000,
+                        color: Colors.blue,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 7, barRods: [
+                      BarChartRodData(
+                        toY: 30000,
+                        color: Colors.blue,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
+                    BarChartGroupData(x: 8, barRods: [
+                      BarChartRodData(
+                        toY: 30000,
+                        color: Colors.blue,
+                        width: 15,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                      ),
+                    ]),
                   ],
-                  lineTouchData: LineTouchData(
-                    enabled: true,
-                    touchTooltipData: LineTouchTooltipData(
-                      // tooltipBgColor: Colors.blue,
-                      getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
-                        return touchedBarSpots.map((barSpot) {
-                          return LineTooltipItem(
-                            '${(barSpot.y * 20000).toInt()} ₺',
-                            const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          );
-                        }).toList();
-                      },
-                    ),
-                  ),
                 ),
               ),
             ),
