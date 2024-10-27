@@ -108,6 +108,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.grey[300],
           title: const Text('Yeni Gelir Ekle'),
           content: Form(
             key: _formKey,
@@ -192,6 +193,11 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                   CustomDateField(
                     hintText: 'Tarih',
                     selectedDate: _selectedDate,
+                    onChanged: (date) {
+                      setState(() {
+                        _selectedDate = date ?? DateTime.now();
+                      });
+                    },
                   ),
 
                   // InkWell(
@@ -225,13 +231,28 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
           ),
           actions: [
             TextButton(
-              child: const Text('İptal'),
+              child: const Text(
+                'İptal',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: const Text('Ekle'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              child: const Text(
+                'Ekle',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _addIncome();

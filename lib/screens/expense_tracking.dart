@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
+import 'package:account_net/core/components/custom_date.dart';
+import 'package:account_net/core/components/custom_dropdown.dart';
+import 'package:account_net/core/components/custom_textfield.dart';
 import 'package:account_net/core/constants/items.dart';
 import 'package:account_net/core/widgets/expense/expense_list.dart';
 import 'package:account_net/core/widgets/expense/expense_chart.dart';
@@ -47,7 +50,9 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.grey[300],
         title: const Text('Gider Takibi'),
         actions: [
           IconButton(
@@ -101,6 +106,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.grey[300],
           title: const Text('Yeni Gider Ekle'),
           content: Form(
             key: _formKey,
@@ -108,81 +114,139 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(
+                  CustomTextField(
                     controller: _descriptionController,
-                    decoration: const InputDecoration(labelText: 'Açıklama'),
+                    hintText: 'Açıklama',
+                    obscureText: false,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Lütfen bir açıklama girin';
                       }
                       return null;
                     },
+                    widthFactor: 0.5,
                   ),
+                  // TextFormField(
+                  //   controller: _descriptionController,
+                  //   decoration: const InputDecoration(labelText: 'Açıklama'),
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Lütfen bir açıklama girin';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _amountController,
-                    decoration: const InputDecoration(labelText: 'Miktar (₺)'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Lütfen bir miktar girin';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Lütfen geçerli bir sayı girin';
-                      }
-                      return null;
-                    },
-                  ),
+                  CustomTextField(
+                      controller: _amountController,
+                      hintText: 'Miktar (₺)',
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Lütfen bir miktar girin';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Lütfen geçerli bir sayı girin';
+                        }
+                        return null;
+                      }),
+                  // TextFormField(
+                  //   controller: _amountController,
+                  //   decoration: const InputDecoration(labelText: 'Miktar (₺)'),
+                  //   keyboardType: TextInputType.number,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Lütfen bir miktar girin';
+                  //     }
+                  //     if (double.tryParse(value) == null) {
+                  //       return 'Lütfen geçerli bir sayı girin';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: _selectedCategory,
-                    decoration: const InputDecoration(labelText: 'Kategori'),
-                    items: ItemConstants.expenseItems.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
+                  CustomDropdown(
+                    hintText: 'Kategori',
+                    items: ItemConstants.expenseItems,
                     onChanged: (value) {
                       setState(() {
                         _selectedCategory = value!;
                       });
                     },
                   ),
+                  // DropdownButtonFormField<String>(
+                  //   value: _selectedCategory,
+                  //   decoration: const InputDecoration(labelText: 'Kategori'),
+                  //   items: ItemConstants.expenseItems.map((category) => DropdownMenuItem(value: category, child: Text(category))).toList(),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       _selectedCategory = value!;
+                  //     });
+                  //   },
+                  // ),
                   const SizedBox(height: 16),
-                  InkWell(
-                    onTap: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: _selectedDate,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-                      if (picked != null && picked != _selectedDate) {
-                        setState(() {
-                          _selectedDate = picked;
-                        });
-                      }
+                  CustomDateField(
+                    hintText: 'Tarih',
+                    selectedDate: _selectedDate,
+                    onChanged: (date) {
+                      setState(() {
+                        _selectedDate = date ?? DateTime.now();
+                      });
                     },
-                    child: InputDecorator(
-                      decoration: const InputDecoration(labelText: 'Tarih'),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(DateFormat('dd/MM/yyyy').format(_selectedDate)),
-                          const Icon(Icons.calendar_today),
-                        ],
-                      ),
-                    ),
                   ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     final DateTime? picked = await showDatePicker(
+                  //       context: context,
+                  //       initialDate: _selectedDate,
+                  //       firstDate: DateTime(2000),
+                  //       lastDate: DateTime(2101),
+                  //     );
+                  //     if (picked != null && picked != _selectedDate) {
+                  //       setState(() {
+                  //         _selectedDate = picked;
+                  //       });
+                  //     }
+                  //   },
+                  //   child: InputDecorator(
+                  //     decoration: const InputDecoration(labelText: 'Tarih'),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Text(DateFormat('dd/MM/yyyy').format(_selectedDate)),
+                  //         const Icon(Icons.calendar_today),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
           ),
           actions: [
             TextButton(
-              child: const Text('İptal'),
+              child: const Text(
+                'İptal',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: const Text('Ekle'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              child: const Text(
+                'Ekle',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _addExpense();

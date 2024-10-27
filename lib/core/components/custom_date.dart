@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomDateField extends StatefulWidget {
   final String hintText;
@@ -6,17 +7,36 @@ class CustomDateField extends StatefulWidget {
   final Function(DateTime?)? onChanged;
 
   const CustomDateField({
-    super.key,
+    Key? key,
     required this.hintText,
     this.selectedDate,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
   State<CustomDateField> createState() => _CustomDateFieldState();
 }
 
 class _CustomDateFieldState extends State<CustomDateField> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    _updateDateDisplay();
+  }
+
+  @override
+  void didUpdateWidget(CustomDateField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateDateDisplay();
+  }
+
+  void _updateDateDisplay() {
+    _controller.text = widget.selectedDate != null ? DateFormat('dd/MM/yyyy').format(widget.selectedDate!) : '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,10 +52,12 @@ class _CustomDateFieldState extends State<CustomDateField> {
 
           if (pickedDate != null && widget.onChanged != null) {
             widget.onChanged!(pickedDate);
+            _controller.text = DateFormat('dd/MM/yyyy').format(pickedDate);
           }
         },
         child: AbsorbPointer(
           child: TextField(
+            controller: _controller,
             readOnly: true,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -54,12 +76,15 @@ class _CustomDateFieldState extends State<CustomDateField> {
               ),
               suffixIcon: const Icon(Icons.calendar_today, color: Colors.grey),
             ),
-            controller: TextEditingController(
-              text: widget.selectedDate != null ? '${widget.selectedDate?.toLocal()}'.split(' ')[0] : '',
-            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

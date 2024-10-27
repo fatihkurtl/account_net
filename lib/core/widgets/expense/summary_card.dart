@@ -13,6 +13,7 @@ class _SummaryCardState extends State<SummaryCard> {
   Widget build(BuildContext context) {
     double totalExpense = widget.expenses.fold(0, (sum, item) => sum + item['amount']);
     return Card(
+      color: Colors.grey[200],
       margin: const EdgeInsets.all(16),
       child: Padding(
         padding: const EdgeInsets.all(16),
