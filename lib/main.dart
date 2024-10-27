@@ -7,9 +7,10 @@ import 'package:account_net/screens/home.dart';
 import 'package:account_net/screens/income_tracking.dart';
 import 'package:account_net/screens/invoice_management.dart';
 import 'package:account_net/screens/login.dart';
-import 'package:account_net/screens/note_screen.dart';
+import 'package:account_net/screens/notes.dart';
 import 'package:account_net/screens/register.dart';
 import 'package:account_net/screens/reports.dart';
+import 'package:account_net/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -63,6 +64,7 @@ class MarbleWorkshopApp extends StatelessWidget {
         '/customer_management': (context) => const CustomerManagementScreen(),
         '/business_profile': (context) => const BusinessProfileScreen(),
         '/notes': (context) => const NotesScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
     );
   }
