@@ -36,7 +36,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
         },
         child: AbsorbPointer(
           child: TextField(
-            readOnly: true, // TextField'ı yalnızca okunur hale getiriyoruz
+            readOnly: true,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.white),
