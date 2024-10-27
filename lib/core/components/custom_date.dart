@@ -7,11 +7,11 @@ class CustomDateField extends StatefulWidget {
   final Function(DateTime?)? onChanged;
 
   const CustomDateField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.selectedDate,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDateField> createState() => _CustomDateFieldState();
@@ -48,6 +48,19 @@ class _CustomDateFieldState extends State<CustomDateField> {
             initialDate: widget.selectedDate ?? DateTime.now(),
             firstDate: DateTime(2000),
             lastDate: DateTime(2101),
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: Colors.blue,
+                    onPrimary: Colors.white,
+                    onSurface: Colors.black,
+                  ),
+                  dialogBackgroundColor: Colors.lightGreen.shade100,
+                ),
+                child: child!,
+              );
+            },
           );
 
           if (pickedDate != null && widget.onChanged != null) {

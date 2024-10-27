@@ -88,15 +88,29 @@ class _QueickActionsState extends State<QueickActions> {
           ),
           actions: [
             TextButton(
-              child: const Text('İptal'),
+              child: const Text(
+                'İptal',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: const Text('Kaydet'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              child: const Text(
+                'Kaydet',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
-                // TODO: Implement save logic
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('$action kaydedildi')),

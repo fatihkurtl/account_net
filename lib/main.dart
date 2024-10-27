@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:account_net/screens/add_business.dart';
 import 'package:account_net/screens/business_profile.dart';
 import 'package:account_net/screens/customer_management.dart';
@@ -11,7 +12,6 @@ import 'package:account_net/screens/notes.dart';
 import 'package:account_net/screens/register.dart';
 import 'package:account_net/screens/reports.dart';
 import 'package:account_net/screens/settings.dart';
-import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MarbleWorkshopApp());
