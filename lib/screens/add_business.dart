@@ -1,6 +1,7 @@
 import 'package:account_net/core/components/custom_button.dart';
 import 'package:account_net/core/components/custom_dropdown.dart';
 import 'package:account_net/core/components/custom_textfield.dart';
+import 'package:account_net/core/constants/items.dart';
 import 'package:flutter/material.dart';
 
 class AddBusinessScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                 const SizedBox(height: 10),
                 CustomDropdown(
                   hintText: 'İşletme Sektörü Seçin',
-                  items: const ['Teknoloji', 'Finans', 'Sağlık', 'Eğitim'],
+                  items: ItemConstants.businessSector,
                   selectedItem: selectedSector,
                   onChanged: (String? newValue) {
                     setState(() {
