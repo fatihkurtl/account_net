@@ -15,7 +15,7 @@ class InvoiceManagementScreen extends StatefulWidget {
 
 class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
   final List<Map<String, dynamic>> _invoices = [];
-  DateTime _selectedDate = DateTime.now();
+  final DateTime _selectedDate = DateTime.now();
 
   void _addInvoice() {
     showDialog(
@@ -27,6 +27,8 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
         DateTime dueDate = DateTime.now();
 
         return AlertDialog(
+          scrollable: true,
+          backgroundColor: Colors.grey[300],
           title: const Text('Fatura Ekle'),
           content: SingleChildScrollView(
             child: Column(
@@ -96,12 +98,18 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Fatura Yönetimi')),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[300],
+        title: const Text('Fatura Yönetimi'),
+      ),
       body: ListView.builder(
         itemCount: _invoices.length,
         itemBuilder: (context, index) {
           final invoice = _invoices[index];
-          return InvoiceList(invoices: invoice);
+          return InvoiceList(
+            invoices: invoice,
+          );
         },
       ),
       floatingActionButton: CustomFloatingActionButton(
