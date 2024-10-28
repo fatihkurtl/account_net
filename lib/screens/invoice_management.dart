@@ -1,3 +1,9 @@
+import 'package:account_net/core/components/custom_date.dart';
+import 'package:account_net/core/components/custom_dropdown.dart';
+import 'package:account_net/core/components/custom_floating_button.dart';
+import 'package:account_net/core/components/custom_textfield.dart';
+import 'package:account_net/core/constants/items.dart';
+import 'package:account_net/core/widgets/invoice/invoice_list.dart';
 import 'package:flutter/material.dart';
 
 class InvoiceManagementScreen extends StatefulWidget {
@@ -9,6 +15,7 @@ class InvoiceManagementScreen extends StatefulWidget {
 
 class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
   final List<Map<String, dynamic>> _invoices = [];
+  DateTime _selectedDate = DateTime.now();
 
   void _addInvoice() {
     showDialog(
@@ -25,26 +32,23 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Açıklama'),
+                CustomTextField(
                   onChanged: (value) => description = value,
+                  hintText: 'Açıklama',
+                  obscureText: false,
                 ),
                 const SizedBox(height: 16),
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Tutar'),
-                  keyboardType: TextInputType.number,
+                CustomTextField(
                   onChanged: (value) => amount = double.tryParse(value) ?? 0,
+                  keyboardType: TextInputType.number,
+                  hintText: 'Tutar',
+                  obscureText: false,
                 ),
                 const SizedBox(height: 16),
-                DropdownButtonFormField<String>(
-                  value: type,
-                  decoration: const InputDecoration(labelText: 'Tür'),
-                  items: ['Elektrik', 'Su', 'Doğalgaz', 'İnternet', 'Diğer'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                CustomDropdown(
+                  hintText: 'Tür',
+                  items: ItemConstants.invoiceItems,
+                  selectedItem: type,
                   onChanged: (String? newValue) {
                     setState(() {
                       type = newValue!;
@@ -52,27 +56,14 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                InkWell(
-                  onTap: () async {
-                    final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: dueDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2101),
-                    );
-                    if (picked != null && picked != dueDate) {
-                      setState(() {
-                        dueDate = picked;
-                      });
-                    }
+                CustomDateField(
+                  hintText: 'Son Ödeme Tarihi',
+                  selectedDate: _selectedDate,
+                  onChanged: (date) async {
+                    setState(() {
+                      dueDate = date!;
+                    });
                   },
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Son Ödeme Tarihi',
-                      suffixIcon: Icon(Icons.calendar_today),
-                    ),
-                    child: Text(dueDate.toString().split(' ')[0]),
-                  ),
                 ),
               ],
             ),
@@ -110,22 +101,13 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
         itemCount: _invoices.length,
         itemBuilder: (context, index) {
           final invoice = _invoices[index];
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: ListTile(
-              title: Text(invoice['description']),
-              subtitle: Text('${invoice['type']} - Son Ödeme: ${invoice['dueDate'].toString().split(' ')[0]}'),
-              trailing: Text(
-                '₺${invoice['amount'].toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          );
+          return InvoiceList(invoices: invoice);
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CustomFloatingActionButton(
+        icon: Icons.add,
         onPressed: _addInvoice,
-        child: const Icon(Icons.add),
+        buttonText: 'Fatura Ekle',
       ),
     );
   }

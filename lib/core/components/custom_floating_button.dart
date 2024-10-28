@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   final Function()? onPressed;
-  final String buttonText;
+  final String? buttonText;
   final IconData? icon;
 
   const CustomFloatingActionButton({
     super.key,
     required this.onPressed,
-    required this.buttonText,
+    this.buttonText,
     this.icon,
   });
 
@@ -30,7 +30,7 @@ class CustomFloatingActionButton extends StatelessWidget {
               const SizedBox(width: 8),
             ],
             Text(
-              buttonText,
+              buttonText!,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
