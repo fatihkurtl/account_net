@@ -50,7 +50,7 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                 CustomDropdown(
                   hintText: 'Tür',
                   items: ItemConstants.invoiceItems,
-                  selectedItem: type,
+                  // selectedItem: type,
                   onChanged: (String? newValue) {
                     setState(() {
                       type = newValue!;
