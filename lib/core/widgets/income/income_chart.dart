@@ -32,6 +32,7 @@ class _IncomeChartState extends State<IncomeChart> {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
+      color: Colors.grey[200],
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

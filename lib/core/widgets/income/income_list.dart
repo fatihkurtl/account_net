@@ -35,6 +35,7 @@ class _IncomeListState extends State<IncomeList> {
           },
           child: Card(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            color: Colors.grey[200],
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: CategoryHelper.getCategoryColor(income['category']),

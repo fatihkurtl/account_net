@@ -63,6 +63,7 @@ class _QueickActionsState extends State<QueickActions> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.grey[300],
           title: Text(action),
           content: Column(
             mainAxisSize: MainAxisSize.min,
