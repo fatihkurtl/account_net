@@ -1,4 +1,4 @@
-import 'package:account_net/core/widgets/overview/expense_breakdown_chart.dart';
+import 'package:account_net/core/widgets/expense_breakdown_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:account_net/core/widgets/overview/balance_card.dart';
 import 'package:account_net/core/widgets/overview/quick_actions.dart';
