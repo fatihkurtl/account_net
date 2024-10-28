@@ -72,11 +72,28 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
           ),
           actions: [
             TextButton(
-              child: const Text('İptal'),
-              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'İptal',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
             ElevatedButton(
-              child: const Text('Ekle'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              child: const Text(
+                'Ekle',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 setState(() {
                   _invoices.add({
