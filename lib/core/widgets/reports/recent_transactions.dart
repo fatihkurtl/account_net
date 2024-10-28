@@ -18,7 +18,7 @@ class _RecentTransactionsState extends State<RecentTransactions> {
         borderRadius: BorderRadius.circular(8),
       ),
       color: Colors.grey[200],
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(12),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
