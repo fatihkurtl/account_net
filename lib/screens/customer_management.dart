@@ -134,6 +134,7 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                backgroundColor: Colors.grey[300],
                 title: const Text('Yeni Müşteri Ekle'),
                 content: CustomerForm(
                   formKey: _formKey,

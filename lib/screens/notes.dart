@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_button.dart';
 import 'package:account_net/core/components/custom_textfield.dart';
-import 'package:flutter/material.dart';
 
 class NotesScreen extends StatefulWidget {
   const NotesScreen({super.key});
@@ -15,7 +15,6 @@ class _NotesScreenState extends State<NotesScreen> {
   final TextEditingController contentController = TextEditingController();
 
   void addNote() {
-    // Not eklemek için işlev eklenebilir
     if (titleController.text.isNotEmpty && contentController.text.isNotEmpty) {
       setState(() {
         notes.add({
@@ -25,7 +24,7 @@ class _NotesScreenState extends State<NotesScreen> {
         titleController.clear();
         contentController.clear();
       });
-      Navigator.pop(context); // Formu kapat
+      Navigator.pop(context);
     }
   }
 
@@ -34,25 +33,54 @@ class _NotesScreenState extends State<NotesScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.grey[300],
           title: const Text('Yeni Not Ekle'),
           content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextField(controller: titleController, hintText: 'Başlık', obscureText: false),
+                CustomTextField(
+                  controller: titleController,
+                  hintText: 'Başlık',
+                  obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                ),
                 const SizedBox(height: 16),
-                CustomTextField(controller: contentController, hintText: 'Not içeriği', obscureText: false, maxLines: 5),
+                CustomTextField(
+                  controller: contentController,
+                  hintText: 'Not içeriği',
+                  obscureText: false,
+                  maxLines: 5,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                ),
               ],
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('İptal'),
+              child: const Text(
+                'İptal',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
               onPressed: addNote,
-              child: const Text('Ekle'),
+              child: const Text(
+                'Ekle',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         );
@@ -116,7 +144,7 @@ class _NotesScreenState extends State<NotesScreen> {
               ),
               const SizedBox(height: 20),
               CustomButton(
-                onTap: showAddNoteForm, // Formu göster
+                onTap: showAddNoteForm,
                 buttonText: 'Not Ekle',
               ),
               const SizedBox(height: 25),
