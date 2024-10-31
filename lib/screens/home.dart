@@ -178,6 +178,67 @@ class _HomeScreenState extends State<HomeScreen> {
           _buildNotificationButton(context),
         ],
       ),
+      // appBar: AppBar(
+      //   elevation: 2,
+      //   backgroundColor: Colors.white,
+      //   leading: Builder(
+      //     builder: (BuildContext context) {
+      //       return IconButton(
+      //         icon: Container(
+      //           padding: const EdgeInsets.all(6),
+      //           decoration: BoxDecoration(
+      //             color: Colors.blueGrey[50],
+      //             shape: BoxShape.circle,
+      //           ),
+      //           child: Icon(
+      //             Icons.menu,
+      //             color: Colors.blueGrey[700],
+      //           ),
+      //         ),
+      //         onPressed: () {
+      //           Scaffold.of(context).openDrawer();
+      //         },
+      //       );
+      //     },
+      //   ),
+      //   title: Row(
+      //     children: [
+      //       Icon(
+      //         Icons.account_balance_wallet_outlined,
+      //         color: Colors.blueGrey[700],
+      //       ),
+      //       const SizedBox(width: 8),
+      //       Text(
+      //         'AccountNet',
+      //         style: TextStyle(
+      //           fontSize: 22,
+      //           fontWeight: FontWeight.bold,
+      //           color: Colors.blueGrey[700],
+      //           letterSpacing: 0.8,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Container(
+      //         padding: const EdgeInsets.all(6),
+      //         decoration: BoxDecoration(
+      //           color: Colors.blueGrey[50],
+      //           shape: BoxShape.circle,
+      //         ),
+      //         child: Icon(
+      //           Icons.search,
+      //           color: Colors.blueGrey[700],
+      //         ),
+      //       ),
+      //       onPressed: () {
+      //         // Arama butonu işlevselliği
+      //       },
+      //     ),
+      //     _buildNotificationButton(context),
+      //   ],
+      // ),
       drawer: const CustomDrawer(),
       body: const SingleChildScrollView(
         child: Padding(
