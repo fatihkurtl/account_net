@@ -1,5 +1,6 @@
-import 'package:account_net/core/components/drawer/custom_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:account_net/core/components/custom_appbar.dart';
+import 'package:account_net/core/components/drawer/custom_drawer.dart';
 import 'package:account_net/core/widgets/home/financial_summary.dart';
 import 'package:account_net/core/widgets/revenue_chart.dart';
 import 'package:account_net/core/widgets/home/quick_access_menu.dart';
@@ -142,9 +143,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
+      appBar: CustomAppBar(
         elevation: 0,
-        backgroundColor: Colors.grey[300],
+        title: 'AccountNet',
+        titleStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey[800],
+          letterSpacing: 0.5,
+        ),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -165,80 +172,10 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ),
-        title: Text(
-          'AccountNet',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[800],
-            letterSpacing: 0.5,
-          ),
-        ),
         actions: [
           _buildNotificationButton(context),
         ],
       ),
-      // appBar: AppBar(
-      //   elevation: 2,
-      //   backgroundColor: Colors.white,
-      //   leading: Builder(
-      //     builder: (BuildContext context) {
-      //       return IconButton(
-      //         icon: Container(
-      //           padding: const EdgeInsets.all(6),
-      //           decoration: BoxDecoration(
-      //             color: Colors.blueGrey[50],
-      //             shape: BoxShape.circle,
-      //           ),
-      //           child: Icon(
-      //             Icons.menu,
-      //             color: Colors.blueGrey[700],
-      //           ),
-      //         ),
-      //         onPressed: () {
-      //           Scaffold.of(context).openDrawer();
-      //         },
-      //       );
-      //     },
-      //   ),
-      //   title: Row(
-      //     children: [
-      //       Icon(
-      //         Icons.account_balance_wallet_outlined,
-      //         color: Colors.blueGrey[700],
-      //       ),
-      //       const SizedBox(width: 8),
-      //       Text(
-      //         'AccountNet',
-      //         style: TextStyle(
-      //           fontSize: 22,
-      //           fontWeight: FontWeight.bold,
-      //           color: Colors.blueGrey[700],
-      //           letterSpacing: 0.8,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       icon: Container(
-      //         padding: const EdgeInsets.all(6),
-      //         decoration: BoxDecoration(
-      //           color: Colors.blueGrey[50],
-      //           shape: BoxShape.circle,
-      //         ),
-      //         child: Icon(
-      //           Icons.search,
-      //           color: Colors.blueGrey[700],
-      //         ),
-      //       ),
-      //       onPressed: () {
-      //         // Arama butonu işlevselliği
-      //       },
-      //     ),
-      //     _buildNotificationButton(context),
-      //   ],
-      // ),
       drawer: const CustomDrawer(),
       body: const SingleChildScrollView(
         child: Padding(

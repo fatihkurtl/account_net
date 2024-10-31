@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:account_net/core/components/custom_appbar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,10 +17,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: const Text('Ayarlar'),
-        backgroundColor: Colors.grey[400],
+      appBar: CustomAppBar(
         elevation: 0,
+        title: 'Ayarlar',
+        titleStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey[800],
+          letterSpacing: 0.5,
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.grey[800],
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
       ),
       body: ListView(
         children: [

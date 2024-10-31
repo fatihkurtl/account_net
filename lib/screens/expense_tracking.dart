@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:account_net/core/components/custom_appbar.dart';
 // import 'package:intl/intl.dart';
 import 'package:account_net/core/components/custom_date.dart';
 import 'package:account_net/core/components/custom_dropdown.dart';
@@ -51,12 +52,38 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        title: const Text('Gider Takibi'),
+      appBar: CustomAppBar(
+        elevation: 0,
+        title: 'Gider Takibi',
+        titleStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey[800],
+          letterSpacing: 0.5,
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.grey[800],
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.filter_list),
+            icon: const Icon(Icons.sort),
             onPressed: () {
               // TODO: Implement filtering
             },

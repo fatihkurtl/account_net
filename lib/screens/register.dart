@@ -83,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: confirmPasswordController,
-                  hintText: 'Şifre Tekrar',
+                  hintText: 'Şifre Tekrarı',
                   obscureText: true,
                 ),
                 // const SizedBox(height: 10),
