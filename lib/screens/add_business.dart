@@ -15,7 +15,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   final businessNameController = TextEditingController();
   final businessEmailController = TextEditingController();
   final businessPhoneController = TextEditingController();
-  final monthlyIncomeController = TextEditingController();
+  final yearlyIncomeController = TextEditingController();
   final workersCountController = TextEditingController();
   final businessAddressController = TextEditingController();
   String? selectedSector;
@@ -58,6 +58,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                   controller: businessNameController,
                   hintText: 'İşletme Adı',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomDropdown(
@@ -69,30 +70,35 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                       selectedSector = newValue;
                     });
                   },
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  controller: monthlyIncomeController,
-                  hintText: 'Aylık Toplam Gelir',
+                  controller: yearlyIncomeController,
+                  hintText: 'Yıllık Toplam Gelir',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: workersCountController,
                   hintText: 'Personel Sayısı',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: businessEmailController,
                   hintText: 'İşletme E-postası',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: businessPhoneController,
                   hintText: 'İşletme Telefon Numarası',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
@@ -100,6 +106,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                   hintText: 'İşletme Adresi',
                   obscureText: false,
                   maxLines: 4,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 25),
                 CustomButton(
