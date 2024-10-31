@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:account_net/screens/add_business.dart';
 import 'package:account_net/screens/business_profile.dart';
 import 'package:account_net/screens/customer_management.dart';
@@ -14,7 +16,7 @@ import 'package:account_net/screens/register.dart';
 import 'package:account_net/screens/reports.dart';
 import 'package:account_net/screens/settings.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MarbleWorkshopApp());
 }
 
@@ -23,7 +25,7 @@ class MarbleWorkshopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Kurumsal Yönetim Sistemi',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
