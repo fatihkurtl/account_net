@@ -97,6 +97,7 @@ class _CustomerManagementScreenState extends State<CustomerManagementScreen> {
                 // TODO: Implement search functionality
               },
               widthFactor: 0.5,
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
             ),
           ),
           Expanded(

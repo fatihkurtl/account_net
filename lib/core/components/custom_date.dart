@@ -4,12 +4,14 @@ import 'package:intl/intl.dart';
 class CustomDateField extends StatefulWidget {
   final String hintText;
   final DateTime? selectedDate;
+  final EdgeInsets? padding;
   final Function(DateTime?)? onChanged;
 
   const CustomDateField({
     super.key,
     required this.hintText,
     this.selectedDate,
+    this.padding = const EdgeInsets.symmetric(horizontal: 25.0),
     this.onChanged,
   });
 
@@ -40,7 +42,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 25.0),
       child: GestureDetector(
         onTap: () async {
           DateTime? pickedDate = await showDatePicker(

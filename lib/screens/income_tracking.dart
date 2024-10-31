@@ -126,7 +126,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                       }
                       return null;
                     },
-                    widthFactor: 0.5,
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // TextFormField(
                   //   controller: _descriptionController,
@@ -152,7 +152,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                       }
                       return null;
                     },
-                    widthFactor: 0.5,
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // TextFormField(
                   //   controller: _amountController,
@@ -178,6 +178,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                         _selectedCategory = value!;
                       });
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // DropdownButtonFormField<String>(
                   //   value: _selectedCategory,
@@ -198,6 +199,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                         _selectedDate = date ?? DateTime.now();
                       });
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
 
                   // InkWell(

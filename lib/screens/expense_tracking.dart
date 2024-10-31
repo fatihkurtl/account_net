@@ -124,7 +124,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                       }
                       return null;
                     },
-                    widthFactor: 0.5,
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // TextFormField(
                   //   controller: _descriptionController,
@@ -138,18 +138,20 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                   // ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                      controller: _amountController,
-                      hintText: 'Miktar (₺)',
-                      obscureText: false,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Lütfen bir miktar girin';
-                        }
-                        if (double.tryParse(value) == null) {
-                          return 'Lütfen geçerli bir sayı girin';
-                        }
-                        return null;
-                      }),
+                    controller: _amountController,
+                    hintText: 'Miktar (₺)',
+                    obscureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Lütfen bir miktar girin';
+                      }
+                      if (double.tryParse(value) == null) {
+                        return 'Lütfen geçerli bir sayı girin';
+                      }
+                      return null;
+                    },
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  ),
                   // TextFormField(
                   //   controller: _amountController,
                   //   decoration: const InputDecoration(labelText: 'Miktar (₺)'),
@@ -173,6 +175,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                         _selectedCategory = value!;
                       });
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // DropdownButtonFormField<String>(
                   //   value: _selectedCategory,
@@ -193,6 +196,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                         _selectedDate = date ?? DateTime.now();
                       });
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   ),
                   // InkWell(
                   //   onTap: () async {

@@ -50,6 +50,7 @@ class _CustomerFormState extends State<CustomerForm> {
               }
               return null;
             },
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
           ),
           const SizedBox(height: 16),
           // TextFormField(
@@ -81,6 +82,7 @@ class _CustomerFormState extends State<CustomerForm> {
               }
               return null;
             },
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
           ),
           const SizedBox(height: 16),
           // TextFormField(
@@ -113,6 +115,7 @@ class _CustomerFormState extends State<CustomerForm> {
               }
               return null;
             },
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
           ),
         ],
       ),

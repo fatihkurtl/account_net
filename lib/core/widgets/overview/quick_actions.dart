@@ -68,7 +68,12 @@ class _QueickActionsState extends State<QueickActions> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomTextField(controller: amountController, hintText: 'Tutar', obscureText: false),
+              CustomTextField(
+                controller: amountController,
+                hintText: 'Tutar',
+                obscureText: false,
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              ),
               const SizedBox(height: 16),
               CustomDropdown(
                 hintText: 'Tip',
@@ -83,6 +88,7 @@ class _QueickActionsState extends State<QueickActions> {
                     selectedType = newValue;
                   });
                 },
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
               ),
               const SizedBox(height: 16),
             ],

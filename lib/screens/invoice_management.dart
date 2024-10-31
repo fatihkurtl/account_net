@@ -38,6 +38,7 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                   onChanged: (value) => description = value,
                   hintText: 'Açıklama',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
@@ -45,6 +46,7 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                   keyboardType: TextInputType.number,
                   hintText: 'Tutar',
                   obscureText: false,
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 16),
                 CustomDropdown(
@@ -56,6 +58,7 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                       type = newValue!;
                     });
                   },
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 16),
                 CustomDateField(
@@ -66,6 +69,7 @@ class _InvoiceManagementScreenState extends State<InvoiceManagementScreen> {
                       dueDate = date!;
                     });
                   },
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
               ],
             ),

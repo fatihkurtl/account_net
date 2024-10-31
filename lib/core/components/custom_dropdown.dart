@@ -4,6 +4,7 @@ class CustomDropdown extends StatelessWidget {
   final String hintText;
   final List<String> items;
   final String? selectedItem;
+  final EdgeInsets? padding;
   final Function(String?)? onChanged;
 
   const CustomDropdown({
@@ -11,13 +12,14 @@ class CustomDropdown extends StatelessWidget {
     required this.hintText,
     required this.items,
     this.selectedItem,
+    this.padding = const EdgeInsets.symmetric(horizontal: 25.0),
     this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 25.0),
       child: DropdownButtonFormField<String>(
         dropdownColor: Colors.white,
         value: selectedItem,
