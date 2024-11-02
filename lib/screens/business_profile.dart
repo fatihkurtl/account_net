@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_appbar.dart';
 import 'package:account_net/core/components/custom_button.dart';
 
-class BusinessProfileScreen extends StatefulWidget {
-  const BusinessProfileScreen({super.key});
+class BusinessProfileScreen extends StatelessWidget {
+  const BusinessProfileScreen({Key? key}) : super(key: key);
 
-  @override
-  _BusinessProfileScreenState createState() => _BusinessProfileScreenState();
-}
-
-class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
-  // Örnek işletme verileri
-  final Map<String, dynamic> businessData = {
+  final Map<String, dynamic> businessData = const {
     'name': 'Örnek İşletme A.Ş.',
     'email': 'ornek@isletme.com',
     'phone': '+90 555 123 4567',
@@ -22,8 +16,7 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
     'sector': 'Teknoloji',
   };
 
-  void editBusiness() {
-    debugPrint('Düzenle butonuna basıldı');
+  void editBusiness(BuildContext context) {
     Navigator.pushNamed(context, '/edit-business');
   }
 
@@ -63,52 +56,23 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: editBusiness,
+            onPressed: () => editBusiness(context),
           ),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
-              Center(
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.blue,
-                  child: Text(
-                    businessData['name']![0],
-                    style: const TextStyle(fontSize: 40, color: Colors.white),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: Text(
-                  businessData['name']!,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              _buildHeader(),
               const SizedBox(height: 30),
               _buildInfoSection(),
               const SizedBox(height: 25),
               _buildStatisticsSection(),
               const SizedBox(height: 25),
-              CustomButton(
-                onTap: () => Navigator.pushNamed(context, '/business-reports'),
-                buttonText: 'Raporları Görüntüle',
-              ),
-              const SizedBox(height: 15),
-              CustomButton(
-                onTap: () => Navigator.pushNamed(context, '/business-transactions'),
-                buttonText: 'İşlemleri Görüntüle',
-              ),
-              const SizedBox(height: 25),
+              _buildActionButtons(context),
             ],
           ),
         ),
@@ -116,21 +80,73 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
     );
   }
 
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        Center(
+          child: Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.blue.shade100,
+            ),
+            child: Center(
+              child: Text(
+                businessData['name']![0],
+                style: TextStyle(
+                    fontSize: 48,
+                    color: Colors.blue.shade700,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          businessData['name']!,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          businessData['sector']!,
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.grey[600],
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
   Widget _buildInfoSection() {
     return Card(
       elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              'İletişim Bilgileri',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 20),
             _buildInfoItem(Icons.email, 'E-posta', businessData['email']!),
-            const Divider(),
             _buildInfoItem(Icons.phone, 'Telefon', businessData['phone']!),
-            const Divider(),
-            _buildInfoItem(Icons.location_on, 'Adres', businessData['address']!),
-            const Divider(),
-            _buildInfoItem(Icons.business, 'Sektör', businessData['sector']!),
+            _buildInfoItem(
+                Icons.location_on, 'Adres', businessData['address']!),
           ],
         ),
       ),
@@ -140,19 +156,21 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
   Widget _buildStatisticsSection() {
     return Card(
       elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'İşletme İstatistikleri',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 20),
             _buildStatItem('Aylık Gelir', businessData['monthlyIncome']!),
             _buildStatItem('Çalışan Sayısı', businessData['employeeCount']!),
             _buildStatItem('Kuruluş Tarihi', businessData['foundedDate']!),
@@ -164,10 +182,18 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
 
   Widget _buildInfoItem(IconData icon, String title, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.blue, size: 24),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.blue.shade700, size: 24),
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -185,6 +211,7 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                   value,
                   style: const TextStyle(
                     fontSize: 16,
+                    color: Colors.black87,
                   ),
                 ),
               ],
@@ -197,7 +224,7 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
 
   Widget _buildStatItem(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -213,10 +240,27 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Column(
+      children: [
+        CustomButton(
+          onTap: () => Navigator.pushNamed(context, '/reports'),
+          buttonText: 'Raporları Görüntüle',
+        ),
+        const SizedBox(height: 15),
+        CustomButton(
+          onTap: () => Navigator.pushNamed(context, '/financial_overview'),
+          buttonText: 'İşlemleri Görüntüle',
+        ),
+      ],
     );
   }
 }

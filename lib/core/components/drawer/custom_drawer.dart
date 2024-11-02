@@ -60,10 +60,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     title: 'İşletme Profili',
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, '/business_profile');
+                      Navigator.pushReplacementNamed(
+                          context, '/business_profile');
                       debugPrint('İşletme Profili butonuna basıldı');
                     },
                   ),
+                  CustomDrawerItem(
+                      icon: Icons.monetization_on,
+                      title: 'Kur Bilgileri',
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(
+                            context, '/currency_info');
+                        debugPrint('Kur Bilgileri butonuna basıldı');
+                      }),
                   CustomDrawerItem(
                     icon: Icons.note,
                     title: 'Notlar',
@@ -121,7 +131,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Bu uygulama, işletmenizi yönetmenize yardımcı olmak için tasarlanmıştır.'),
+              const Text(
+                  'Bu uygulama, işletmenizi yönetmenize yardımcı olmak için tasarlanmıştır.'),
               const SizedBox(height: 20),
               const Text('Geliştirici: Fatih Kurt'),
               InkWell(

@@ -1,3 +1,4 @@
+import 'package:account_net/screens/currency_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -67,6 +68,7 @@ class MarbleWorkshopApp extends StatelessWidget {
         '/customer_management': (context) => const CustomerManagementScreen(),
         '/business_profile': (context) => const BusinessProfileScreen(),
         '/notes': (context) => const NotesScreen(),
+        '/currency_info': (context) => const CurrencyInfoScreen(),
         '/settings': (context) => const SettingsScreen(),
       },
     );

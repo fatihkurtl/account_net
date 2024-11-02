@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final Function()? onTap;
   final String buttonText;
-  final bool isAddButton; // Ekle butonu olup olmadığını belirten parametre
+  final bool isAddButton;
 
   const CustomButton({
     super.key,
     required this.onTap,
     required this.buttonText,
-    this.isAddButton = false, // Varsayılan değer false
+    this.isAddButton = false,
   });
 
   @override
