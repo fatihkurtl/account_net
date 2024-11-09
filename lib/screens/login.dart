@@ -154,9 +154,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SquareTile(imagePath: 'lib/assets/icons/google.png', onTap: signGoogleIn),
+                    SquareTile(
+                        imagePath: 'lib/assets/icons/google.png',
+                        onTap: signGoogleIn),
                     const SizedBox(width: 25),
-                    SquareTile(imagePath: 'lib/assets/icons/apple.png', onTap: signAppleIn),
+                    SquareTile(
+                        imagePath: 'lib/assets/icons/apple.png',
+                        onTap: signAppleIn),
                   ],
                 ),
                 const SizedBox(height: 25),

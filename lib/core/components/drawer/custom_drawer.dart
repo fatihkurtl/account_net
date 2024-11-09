@@ -84,6 +84,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     },
                   ),
                   CustomDrawerItem(
+                    icon: Icons.person,
+                    title: 'Personel Listesi',
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/employees');
+                      debugPrint('Personel Listesi butonuna basıldı');
+                    },
+                  ),
+                  CustomDrawerItem(
                     icon: Icons.settings,
                     title: 'Ayarlar',
                     onTap: () {
