@@ -100,7 +100,8 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.account_balance_wallet, size: 64, color: Colors.grey),
+                        Icon(Icons.account_balance_wallet,
+                            size: 64, color: Colors.grey),
                         SizedBox(height: 16),
                         Text(
                           'Henüz gelir kaydı yok.',
@@ -141,7 +142,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomTextField(
                     controller: _descriptionController,
@@ -170,6 +171,7 @@ class _IncomeTrackingScreenState extends State<IncomeTrackingScreen> {
                     controller: _amountController,
                     hintText: 'Miktar (₺)',
                     obscureText: false,
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Lütfen bir miktar girin';

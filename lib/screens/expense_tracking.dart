@@ -168,6 +168,7 @@ class _ExpenseTrackingScreenState extends State<ExpenseTrackingScreen> {
                     controller: _amountController,
                     hintText: 'Miktar (₺)',
                     obscureText: false,
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Lütfen bir miktar girin';
