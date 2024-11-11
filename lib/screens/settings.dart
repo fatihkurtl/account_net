@@ -1,3 +1,5 @@
+import 'package:account_net/core/widgets/settings/section_tile.dart';
+import 'package:account_net/core/widgets/settings/settings_item.dart';
 import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_appbar.dart';
 
@@ -49,11 +51,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          _buildSectionTitle('Genel'),
-          _buildSettingItem(
+          const SectionTile(
+            title: 'Genel',
+          ),
+          SettingsItem(
             title: 'Karanlık Mod',
             trailing: Switch(
               value: _darkMode,
+              inactiveTrackColor: Colors.grey[300],
               onChanged: (value) {
                 setState(() {
                   _darkMode = value;
@@ -62,10 +67,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               activeColor: Colors.black,
             ),
           ),
-          _buildSettingItem(
+          SettingsItem(
             title: 'Bildirimler',
             trailing: Switch(
               value: _notifications,
+              inactiveTrackColor: Colors.grey[300],
               onChanged: (value) {
                 setState(() {
                   _notifications = value;
@@ -74,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               activeColor: Colors.black,
             ),
           ),
-          _buildSettingItem(
+          SettingsItem(
             title: 'Dil',
             trailing: DropdownButton<String>(
               value: _language,
@@ -83,7 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _language = newValue!;
                 });
               },
-              items: <String>['Türkçe', 'English', 'Deutsch'].map<DropdownMenuItem<String>>((String value) {
+              items: <String>['Türkçe', 'English', 'Deutsch']
+                  .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -91,68 +98,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
               }).toList(),
             ),
           ),
-          _buildSectionTitle('Hesap'),
-          _buildSettingItem(
+          const SectionTile(
+            title: 'Hesap',
+          ),
+          SettingsItem(
             title: 'Profili Düzenle',
             onTap: () {
               // Profil düzenleme sayfasına yönlendirme
             },
           ),
-          _buildSettingItem(
+          SettingsItem(
             title: 'Şifre Değiştir',
             onTap: () {
               // Şifre değiştirme sayfasına yönlendirme
             },
           ),
-          _buildSectionTitle('Diğer'),
-          _buildSettingItem(
+          SettingsItem(
+            title: 'Hesabı Sil',
+            titleColor: Colors.red.shade600,
+            icon: Icons.warning,
+            iconColor: Colors.red.shade600,
+            onTap: () {
+              // Hesabı silme islemi
+            },
+          ),
+          const SectionTile(
+            title: 'Diğer',
+          ),
+          SettingsItem(
             title: 'Hakkında',
             onTap: () {
               // Hakkında sayfasına yönlendirme
             },
           ),
-          _buildSettingItem(
+          SettingsItem(
             title: 'Çıkış Yap',
             onTap: () {
-              // Çıkış yapma işlemi
+              // Çıkış yapma islemi
             },
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey[800],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSettingItem({
-    required String title,
-    Widget? trailing,
-    VoidCallback? onTap,
-  }) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(color: Colors.grey[800]),
-      ),
-      trailing: trailing,
-      onTap: onTap,
-      tileColor: Colors.grey[350],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     );
   }
 }

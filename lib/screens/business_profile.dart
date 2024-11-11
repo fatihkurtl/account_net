@@ -128,6 +128,7 @@ class BusinessProfileScreen extends StatelessWidget {
   Widget _buildInfoSection() {
     return Card(
       elevation: 3,
+      color: Colors.grey[200],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -156,6 +157,7 @@ class BusinessProfileScreen extends StatelessWidget {
   Widget _buildStatisticsSection() {
     return Card(
       elevation: 3,
+      color: Colors.grey[200],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
