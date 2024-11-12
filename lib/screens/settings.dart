@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:account_net/core/widgets/settings/section_tile.dart';
 import 'package:account_net/core/widgets/settings/settings_item.dart';
-import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_appbar.dart';
 
 class SettingsScreen extends StatefulWidget {

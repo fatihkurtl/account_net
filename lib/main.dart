@@ -1,7 +1,8 @@
-import 'package:account_net/screens/currency_info.dart';
-import 'package:account_net/screens/employees.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:account_net/screens/currency_info.dart';
+import 'package:account_net/screens/employees.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:account_net/screens/add_business.dart';
@@ -19,6 +20,8 @@ import 'package:account_net/screens/reports.dart';
 import 'package:account_net/screens/settings.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('tr_TR', null);
   runApp(const MarbleWorkshopApp());
 }
 

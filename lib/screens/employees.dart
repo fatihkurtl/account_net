@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:account_net/core/components/custom_appbar.dart';
 import 'package:account_net/core/components/custom_date.dart';
 import 'package:account_net/core/components/custom_dropdown.dart';
 import 'package:account_net/core/components/custom_floating_button.dart';
 import 'package:account_net/core/components/custom_textfield.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:account_net/core/models/employee.dart';
+import 'package:account_net/core/widgets/employees/detail_panel.dart';
+import 'package:account_net/core/widgets/employees/employee_list.dart';
 
 class EmployeeListScreen extends StatefulWidget {
   const EmployeeListScreen({super.key});
@@ -38,6 +41,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   // Örnek personel verileri
   List<Employee> employees = [
     Employee(
+      id: 1,
       name: 'John Doe',
       position: 'Yönetici',
       department: 'Yönetim',
@@ -48,6 +52,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
       photoUrl: 'lib/assets/images/user_man.png',
     ),
     Employee(
+      id: 2,
       name: 'Jane Smith',
       position: 'Kıdemli Geliştirici',
       department: 'Geliştirme',
@@ -298,19 +303,166 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.7,
-        minChildSize: 0.5,
-        maxChildSize: 0.95,
-        expand: false,
-        builder: (context, scrollController) => SingleChildScrollView(
-          controller: scrollController,
-          child: EmployeeDetailsPanel(employee: employee),
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.5,
+          maxChildSize: 0.95,
+          expand: false,
+          builder: (context, scrollController) => Stack(
+            clipBehavior: Clip.none,
+            children: [
+              CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 12),
+                        Container(
+                          width: 40,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[400],
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: EmployeeDetailsPanel(
+                      employee: employee,
+                      backgroundColor: Colors.grey[200],
+                    ),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[600],
+                                  foregroundColor: Colors.white,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                icon: const Icon(Icons.edit),
+                                label: const Text('Düzenle'),
+                                onPressed: () {
+                                  // TODO: Implement edit functionality
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red[600],
+                                  foregroundColor: Colors.white,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                icon: const Icon(Icons.delete_outline),
+                                label: const Text('Sil'),
+                                onPressed: () {
+                                  _showDeleteConfirmation(context, employee);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: IconButton(
+                  icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400]?.withOpacity(0.8),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.close, color: Colors.grey[800], size: 20),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmation(BuildContext context, Employee employee) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey[200],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text('Personeli Sil'),
+          content: Text(
+            '${employee.name} isimli personeli silmek istediğinizden emin misiniz?',
+          ),
+          actions: [
+            TextButton(
+              child: Text(
+                'Vazgeç',
+                style: TextStyle(color: Colors.grey[800]),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red[600],
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Sil'),
+              onPressed: () {
+                // TODO: Implement delete functionality
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -435,6 +587,7 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                   formKey.currentState?.save();
                   setState(() {
                     employees.add(Employee(
+                      id: DateTime.now().millisecondsSinceEpoch,
                       name: name,
                       position: position,
                       department: department,
@@ -551,186 +704,6 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class Employee {
-  final String name;
-  final String position;
-  final String department;
-  final double salary;
-  final String phoneNumber;
-  final String email;
-  final DateTime startDate;
-  final String? photoUrl;
-  bool isSalaryPaid;
-
-  Employee({
-    required this.name,
-    required this.position,
-    required this.department,
-    required this.salary,
-    required this.phoneNumber,
-    required this.email,
-    required this.startDate,
-    this.photoUrl,
-    this.isSalaryPaid = false,
-  });
-}
-
-class EmployeeListItem extends StatelessWidget {
-  final Employee employee;
-  final VoidCallback onSalaryPaid;
-  final VoidCallback onTap;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-
-  const EmployeeListItem({
-    required this.employee,
-    required this.onSalaryPaid,
-    required this.onTap,
-    required this.onEdit,
-    required this.onDelete,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(employee.name),
-      background: Container(
-        color: Colors.blue,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.centerLeft,
-        child: const Icon(Icons.edit, color: Colors.white),
-      ),
-      secondaryBackground: Container(
-        color: Colors.red,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.centerRight,
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          onEdit();
-          return false;
-        } else if (direction == DismissDirection.endToStart) {
-          onDelete();
-          return true;
-        }
-        return false;
-      },
-      child: Card(
-        elevation: 4,
-        color: Colors.grey[200],
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: ListTile(
-          onTap: onTap,
-          leading: CircleAvatar(
-            backgroundImage: employee.photoUrl != null
-                ? AssetImage(employee.photoUrl!)
-                : const AssetImage('assets/default_avatar.png')
-                    as ImageProvider,
-          ),
-          title: Text(
-            employee.name,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: Text('${employee.position} • ${employee.department}'),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Icon(
-                  employee.isSalaryPaid
-                      ? Icons.check_circle
-                      : Icons.radio_button_unchecked,
-                  color: employee.isSalaryPaid ? Colors.green : Colors.grey,
-                ),
-                onPressed: onSalaryPaid,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class EmployeeDetailsPanel extends StatelessWidget {
-  final Employee employee;
-
-  const EmployeeDetailsPanel({
-    super.key,
-    required this.employee,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            employee.name,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            employee.position,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[700],
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Departman: ${employee.department}',
-            style: TextStyle(color: Colors.grey[700]),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Maaş: ₺${employee.salary.toStringAsFixed(2)}',
-            style: TextStyle(color: Colors.grey[800]),
-          ),
-          const SizedBox(height: 16),
-          Divider(color: Colors.grey[300]),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              const Icon(Icons.phone, size: 20, color: Colors.blue),
-              const SizedBox(width: 8),
-              Text(
-                employee.phoneNumber,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              const Icon(Icons.email, size: 20, color: Colors.blue),
-              const SizedBox(width: 8),
-              Text(
-                employee.email,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Divider(color: Colors.grey[300]),
-          const SizedBox(height: 16),
-          Text(
-            'İşe Başlama Tarihi: ${DateFormat('dd/MM/yyyy').format(employee.startDate)}',
-            style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-          ),
-        ],
-      ),
     );
   }
 }
