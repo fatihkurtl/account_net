@@ -1,4 +1,4 @@
-import 'package:account_net/screens/onboards/onboarding.dart';
+import 'package:account_net/screens/onboard/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
