@@ -40,16 +40,12 @@ class CustomTextField extends StatelessWidget {
     const double minWidth = 500;
     const double maxWidth = 900;
 
-    // Genişlik hesaplama
     double calculatedWidth = screenWidth * (widthFactor ?? 1.0);
 
-    // Minimum ve maksimum sınırları uygula
     calculatedWidth = calculatedWidth.clamp(minWidth, maxWidth);
 
     return Center(
-      // Merkeze alma
       child: ConstrainedBox(
-        // Sınırları uygulama
         constraints: BoxConstraints(
           maxWidth: calculatedWidth,
           minWidth: minWidth,

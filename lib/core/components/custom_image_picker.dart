@@ -59,7 +59,7 @@ class CustomImagePicker extends StatelessWidget {
           child: GestureDetector(
             onTap: _pickImage,
             child: Container(
-              height: 55, // TextField ile aynı yükseklik
+              height: 55,
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(12),
