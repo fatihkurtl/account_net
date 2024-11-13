@@ -1,3 +1,4 @@
+import 'package:account_net/screens/onboards/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -58,8 +59,9 @@ class MarbleWorkshopApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/',
+      initialRoute: '/onboarding',
       routes: {
+        '/onboarding': (context) => const OnboardingScreen(),
         '/register': (context) => const RegisterScreen(),
         '/': (context) => const LoginScreen(),
         '/add_business': (context) => const AddBusinessScreen(),
