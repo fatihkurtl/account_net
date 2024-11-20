@@ -5,6 +5,7 @@ class CustomButton extends StatelessWidget {
   final String buttonText;
   final bool isAddButton;
   final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
   const CustomButton({
     super.key,
@@ -12,6 +13,7 @@ class CustomButton extends StatelessWidget {
     required this.buttonText,
     this.isAddButton = false,
     this.padding,
+    this.margin,
   });
 
   @override
@@ -20,7 +22,7 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: padding ?? const EdgeInsets.all(25),
-        margin: const EdgeInsets.symmetric(horizontal: 25),
+        margin: margin ?? const EdgeInsets.all(0),
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(8),

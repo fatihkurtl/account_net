@@ -180,6 +180,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                 CustomButton(
                   onTap: addBusiness,
                   buttonText: 'İşletme Ekle',
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 ),
                 const SizedBox(height: 25),
                 Row(

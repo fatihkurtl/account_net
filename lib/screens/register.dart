@@ -103,6 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomButton(
                   buttonText: 'Hesap Oluştur',
                   onTap: signCustomerUp,
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
                 ),
                 const SizedBox(height: 25),
                 Padding(
@@ -135,9 +136,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SquareTile(imagePath: 'lib/assets/icons/google.png', onTap: signGoogleUp),
+                    SquareTile(
+                        imagePath: 'lib/assets/icons/google.png',
+                        onTap: signGoogleUp),
                     const SizedBox(width: 25),
-                    SquareTile(imagePath: 'lib/assets/icons/apple.png', onTap: signAppleUp),
+                    SquareTile(
+                        imagePath: 'lib/assets/icons/apple.png',
+                        onTap: signAppleUp),
                   ],
                 ),
                 const SizedBox(height: 25),

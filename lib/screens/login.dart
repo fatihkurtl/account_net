@@ -122,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   buttonText: 'Giriş Yap',
                   onTap: signCustomerIn,
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
                 ),
                 const SizedBox(height: 50),
                 Padding(
