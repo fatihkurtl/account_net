@@ -1,5 +1,7 @@
-import 'package:account_net/core/components/drawer/custom_drawer_item.dart';
 import 'package:flutter/material.dart';
+import 'package:account_net/screens/webview.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:account_net/core/components/drawer/custom_drawer_item.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -101,7 +103,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       debugPrint('Ayarlar butonuna basıldı');
                     },
                   ),
-                  const Divider(),
                   CustomDrawerItem(
                     icon: Icons.info_outline,
                     title: 'Hakkında',
@@ -109,6 +110,49 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       Navigator.pop(context);
                       _showAboutDialog(context);
                     },
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WebViewPage(
+                              url: dotenv.env['BUY_ME_A_COFFEE_URL']!,
+                              title: 'Buy Me a Coffee',
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFF813F),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.coffee,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Buy me a coffee',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
