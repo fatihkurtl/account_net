@@ -1,3 +1,4 @@
+import 'package:account_net/core/components/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_image_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -84,8 +85,8 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: const Text('İşletme Ekle'),
+      appBar: CustomAppBar(
+        title: 'İşletme Ekle',
         backgroundColor: Colors.grey[300],
       ),
       body: SafeArea(

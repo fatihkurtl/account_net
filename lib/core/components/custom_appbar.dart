@@ -30,6 +30,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       elevation: widget.elevation != 0 ? widget.elevation : 0,
       backgroundColor: widget.backgroundColor ?? Colors.grey[300],
+      scrolledUnderElevation: 0,
       leading: widget.leading,
       title: Text(
         widget.title,
