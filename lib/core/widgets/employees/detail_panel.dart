@@ -7,10 +7,10 @@ class EmployeeDetailsPanel extends StatelessWidget {
   final Color? backgroundColor;
 
   const EmployeeDetailsPanel({
-    Key? key,
+    super.key,
     required this.employee,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

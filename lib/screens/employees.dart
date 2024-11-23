@@ -178,6 +178,8 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                       ),
                     )),
                 FilterChip(
+                  backgroundColor: Colors.grey[200],
+                  selectedColor: Colors.grey.withOpacity(0.6),
                   label: const Text('Maaşı Ödenmeyenler'),
                   selected: _showOnlyUnpaid,
                   onSelected: (selected) {
@@ -307,7 +309,9 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
       builder: (context) => Container(
         decoration: BoxDecoration(
           color: Colors.grey[300],
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(32),
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),

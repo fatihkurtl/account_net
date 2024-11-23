@@ -36,7 +36,9 @@ class _CustomDateFieldState extends State<CustomDateField> {
   }
 
   void _updateDateDisplay() {
-    _controller.text = widget.selectedDate != null ? DateFormat('dd/MM/yyyy').format(widget.selectedDate!) : '';
+    _controller.text = widget.selectedDate != null
+        ? DateFormat('dd/MM/yyyy').format(widget.selectedDate!)
+        : '';
   }
 
   @override
