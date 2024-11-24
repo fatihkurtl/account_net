@@ -6,6 +6,7 @@ class CustomDropdown extends StatelessWidget {
   final String? selectedItem;
   final EdgeInsets? padding;
   final Function(String?)? onChanged;
+  final String? Function(String?)? validator;
 
   const CustomDropdown({
     super.key,
@@ -14,6 +15,7 @@ class CustomDropdown extends StatelessWidget {
     this.selectedItem,
     this.padding = const EdgeInsets.symmetric(horizontal: 25.0),
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -40,6 +42,7 @@ class CustomDropdown extends StatelessWidget {
           ),
         ),
         onChanged: onChanged,
+        validator: validator,
         items: items.map((String item) {
           return DropdownMenuItem<String>(
             value: item,
