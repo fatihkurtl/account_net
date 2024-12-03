@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:account_net/core/components/custom_appbar.dart';
 import 'package:account_net/core/components/custom_snackbar.dart';
+import 'package:account_net/core/services/api.dart';
+import 'package:account_net/features/models/api_response.dart';
 import 'package:flutter/material.dart';
 import 'package:account_net/core/components/custom_image_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -54,6 +58,7 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
       try {
         // Form verilerini hazırla
         final Map<String, dynamic> businessData = {
+          'logo': '',
           'businessName': businessNameController.text,
           'businessEmail': businessEmailController.text,
           'businessPhone': businessPhoneController.text,
@@ -67,14 +72,38 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
         if (_logoImage != null) {
           // Logo dosyasını oku
           final bytes = await _logoImage!.readAsBytes();
+          businessData['logo'] = base64Encode(bytes);
           // Base64 veya MultipartFile olarak ekleyebilirsiniz
           // businessData['logo'] = base64Encode(bytes);
           // veya
           // final logoFile = MultipartFile.fromBytes('logo', bytes, filename: _logoImage!.name);
         }
 
-        // API'ye gönder
-        // final response = await yourApiService.addBusiness(businessData);
+        final response = await ApiServices.post(
+          '/api/v1/users/add/company/',
+          businessData,
+        );
+
+        final apiResponse = ApiResponse.fromJson(response);
+
+        if (apiResponse.statusCode == 201) {
+          CustomSnackBar.show(
+            context: context,
+            message: 'İşletme başarıyla eklendi',
+            type: SnackBarType.success,
+          );
+          Navigator.pushNamed(context, '/home');
+        } else {
+          String errorMessage = apiResponse.body.message;
+          if (apiResponse.body.errors != null) {
+            errorMessage += '\n${apiResponse.body.errors!.values.join('\n')}';
+          }
+          CustomSnackBar.show(
+            context: context,
+            message: errorMessage,
+            type: SnackBarType.error,
+          );
+        }
 
         debugPrint('İşletme ekleniyor: $businessData');
         // Navigator.pushNamed(context, '/home');
@@ -203,7 +232,8 @@ class _AddBusinessScreenState extends State<AddBusinessScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Lütfen işletme e-postanızı girin';
                           }
-                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
                             return 'Geçerli bir e-posta adresi girin';
                           }
                           return null;

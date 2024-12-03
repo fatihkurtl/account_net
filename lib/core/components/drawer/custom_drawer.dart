@@ -112,6 +112,49 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     },
                   ),
                   const Divider(),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       Navigator.pop(context);
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => WebViewPage(
+                  //             url: dotenv.env['BUY_ME_A_COFFEE_URL'] ??
+                  //                 'https://buymeacoffee.com/fatihkurt',
+                  //             title: 'Buy Me a Coffee',
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: Container(
+                  //       padding: const EdgeInsets.symmetric(vertical: 8),
+                  //       decoration: BoxDecoration(
+                  //         color: const Color(0xFFFF813F),
+                  //         borderRadius: BorderRadius.circular(5),
+                  //       ),
+                  //       child: const Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Icon(
+                  //             Icons.coffee,
+                  //             color: Colors.white,
+                  //           ),
+                  //           SizedBox(width: 8),
+                  //           Text(
+                  //             'Buy me a coffee',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -122,34 +165,30 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => WebViewPage(
-                              url: dotenv.env['BUY_ME_A_COFFEE_URL']!,
+                              url: dotenv.env['BUY_ME_A_COFFEE_URL'] ??
+                                  'https://buymeacoffee.com/fatihkurt',
                               title: 'Buy Me a Coffee',
                             ),
                           ),
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFF813F),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.coffee,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Buy me a coffee',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
                             ),
                           ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            'https://www.owlstown.com/assets/icons/bmc-yellow-button-e91f626c5320efe1868dd75673b6edae7d0e2e4f059d40cd3287a7c8536805e6.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
